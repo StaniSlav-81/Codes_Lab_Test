@@ -1,0 +1,68 @@
+#!/bin/bash
+# Jednoduchá To-Do aplikace v Bash
+# Soubor se seznamem úkolů
+TODO_FILE="todo.txt"
+
+# Funkce: inicializace souboru
+init_file() {
+    if [ ! -f "$TODO_FILE" ]; then
+        touch "$TODO_FILE"
+    fi
+}
+
+# Funkce: zobrazení menu
+show_menu() {
+    echo "=============================="
+    echo "      To-Do aplikace"
+    echo "=============================="
+    echo "1) Přidat úkol"
+    echo "2) Zobrazit úkoly"
+    echo "3) Označit úkol jako dokončený"
+    echo "4) Smazat úkol"
+    echo "5) Ukončit"
+    echo "=============================="
+}
+
+# Funkce: přidání úkolu
+add_task() {
+    read -p "Zadejte nový úkol: " task
+    echo "[ ] $task" >> "$TODO_FILE"
+    echo "Úkol přidán!"
+}
+
+# Funkce: zobrazení úkolů
+view_tasks() {
+    echo "Seznam úkolů:"
+    nl -w2 -s'. ' "$TODO_FILE"
+}
+
+# Funkce: označení úkolu jako dokončeného
+mark_task() {
+    view_tasks
+    read -p "Zadejte číslo úkolu k označení: " num
+    sed -i "${num}s/\\[ \\]/[x]/" "$TODO_FILE"
+    echo "Úkol označen jako dokončený!"
+}
+
+# Funkce: smazání úkolu
+delete_task() {
+    view_tasks
+    read -p "Zadejte číslo úkolu ke smazání: " num
+    sed -i "${num}d" "$TODO_FILE"
+    echo "Úkol smazán!"
+}
+
+# Hlavní smyčka
+init_file
+while true; do
+    show_menu
+    read -p "Vyberte možnost: " choice
+    case $choice in
+        1) add_task ;;
+        2) view_tasks ;;
+        3) mark_task ;;
+        4) delete_task ;;
+        5) echo "Ukončuji program."; break ;;
+        *) echo "Neplatná volba, zkuste znovu." ;;
+    esac
+done
