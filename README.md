@@ -19,6 +19,7 @@ Automatické ukládání - Všechny změny se ukládají do souboru todo.txt
 Členění projektu:
 
 todo-list/
+
 ├── todo.txt           # Hlavní skript s interaktivním menu
 ├── funkce.todo.sh     # Soubor s rozšiřujícími funkcemi
 ├── todo.txt           # Datový soubor s uloženými úkoly (vytvoří se automaticky)
@@ -43,13 +44,13 @@ Příklady použití:
 
 - Přidání úkolu:
 
-Vybert možnost 1
-Zadejt text úkolu
+Vyber možnost 1
+Zadej text úkolu
 Úkol se uloží ve formátu [ ] Text úkolu
 Označení jako dokončený:
 
 Vyber možnost 3
-Zadejte číslo úkolu
+Zadejt číslo úkolu
 Úkol se označí jako [x] Text úkolu
 
 
@@ -72,7 +73,7 @@ Počet nedokončených úkolů
 [ ] Nedokončený úkol
 [x] Dokončený úkol
 
-Další zajímavisti:
+Další zajímavosti:
 
 Hlavní skript (todo.txt),
 Interaktivní smyčka s menu,
