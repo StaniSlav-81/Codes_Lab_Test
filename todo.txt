@@ -1,7 +1,11 @@
 #!/bin/bash
 #Moje první To-Do aplikace v Bashi :-)
+
 # Soubor se seznamem úkolů
 TODO_FILE="todo.txt"
+
+# Načtení funkcí z externího souboru
+source ./funkce.todo.sh
 
 # Funkce: označení zdrojového souboru
 init_file() {
@@ -19,7 +23,10 @@ show_menu() {
     echo "2/ Zobraz úkoly"
     echo "3/ Označi úkol jako dokončený"
     echo "4/ Smaž úkol"
-    echo "5/ Ukonči akci"
+    echo "5/ Vyhledej úkol"
+    echo "6/ Zobraz statistiky"
+    echo "7/ Edituj úkol"
+    echo "8/ Ukonči akci"
     echo "******************************"
 }
 
@@ -56,13 +63,16 @@ delete_task() {
 init_file
 while true; do
     show_menu
-    read -p "Vyberte mjednu z možností: " choice
+    read -p "Vyberte jednu z možností: " choice
     case $choice in
         1) add_task ;;
         2) view_tasks ;;
         3) mark_task ;;
         4) delete_task ;;
-        5) echo "Ukončuji program."; break ;;
+        5) search_tasks ;;
+        6) show_statistics ;;
+        7) edit_task ;;
+        8) echo "Ukončuji program."; break ;;
         *) echo "Neplatná volba, zkuste znovu." ;;
     esac
 done
