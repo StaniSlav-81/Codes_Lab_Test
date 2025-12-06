@@ -1,30 +1,40 @@
 Popis mého prvního projektu
 
-Připravil jsem jednoduchou a snad efektivní aplikaci pro správu úkolů, která je dle zadání úkolu  napsaná v Bash a má interaktivním menu.
+Připravil jsem jednoduchou a snad efektivní aplikaci pro správu úkolů, která je dle zadání úkolu napsaná v Bash a má interaktivní menu. 
 
 To-Do aplikace umožňuje správu seznamu úkolů přímo z příkazové řádky. Aplikace používá intuitivní číselné menu a ukládá všechny úkoly do textového souboru.
 
-Hlavní funkce jsou:
+Hlavní funkce
 
 Přidání úkolu - Vytvoření nového úkolu v seznamu
+
 Zobrazení úkolů - Přehledný výpis všech úkolů s číslováním
+
 Označení jako hotový - Označení dokončených úkolů symbolem [x]
+
 Smazání úkolu - Odstranění úkolu ze seznamu
+
 Vyhledávání - Rychlé nalezení úkolů podle klíčového slova
+
 Statistiky - Přehled počtu všech, dokončených a nedokončených úkolů
+
 Editace úkolu - Změna textu existujícího úkolu
+
 Automatické ukládání - Všechny změny se ukládají do souboru todo.txt
 
-
-Členění projektu:
+Členění projektu
 
 todo-list/
 
-├── todo.txt           # Hlavní skript s interaktivním menu
+├── todo_list.sh       # Hlavní skript s interaktivním menu
+
 ├── funkce.todo.sh     # Soubor s rozšiřujícími funkcemi
+
 ├── todo.txt           # Datový soubor s uloženými úkoly (vytvoří se automaticky)
+
 └── README.md          # Dokumentace
 
+Použití
 
 Po spuštění se zobrazí interaktivní menu:
 
@@ -40,47 +50,55 @@ Po spuštění se zobrazí interaktivní menu:
 7/ Edituj úkol
 8/ Ukonči akci
 ******************************
-Příklady použití:
 
-- Přidání úkolu:
+Příklady použití
+
+Přidání úkolu:
 
 Vyber možnost 1
+
 Zadej text úkolu
 Úkol se uloží ve formátu [ ] Text úkolu
+
 Označení jako dokončený:
 
 Vyber možnost 3
-Zadejt číslo úkolu
+
+Zadej číslo úkolu
 Úkol se označí jako [x] Text úkolu
 
+Vyhledávání:
 
+Vyber možnost 5
 
-- Vyhledávání:
-
-Vyberte možnost 5
-Zadejte hledaný výraz
+Zadej hledaný výraz
 Zobrazí se všechny odpovídající úkoly
+
 Statistiky:
 
-Vyberte možnost 6
+Vyber možnost 6
+
 Zobrazí se přehled:
+
 Celkový počet úkolů
 Počet dokončených úkolů
 Počet nedokončených úkolů
+
+Formát dat
 
 Úkoly jsou ukládány do souboru todo.txt ve formátu:
 
 [ ] Nedokončený úkol
 [x] Dokončený úkol
+Další zajímavosti
+Hlavní skript (todo_list.sh):
 
-Další zajímavosti:
+Interaktivní smyčka s menu
+Inicializace datového souboru
+Základní funkce pro správu úkolů
 
-Hlavní skript (todo.txt),
-Interaktivní smyčka s menu,
-Inicializace datového souboru,
-Základní funkce pro správu úkolů,
-Soubor funkcí (funkce.todo.sh),
-search_tasks() - vyhledávání pomocí grep,
-show_statistics() - výpočet statistik z datového souboru,
-edit_task() - editace s uchováním stavu.
+Soubor funkcí (funkce.todo.sh):
 
+search_tasks() - vyhledávání pomocí grep
+show_statistics() - výpočet statistik z datového souboru
+edit_task() - editace s uchováním stavu dokončení
