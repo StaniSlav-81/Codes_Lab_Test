@@ -21,7 +21,7 @@ show_menu() {
     echo "******************************"
     echo "1/ Přidej úkol"
     echo "2/ Zobraz úkoly"
-    echo "3/ Označi úkol jako dokončený"
+    echo "3/ Označ úkol jako hotový"
     echo "4/ Smaž úkol"
     echo "5/ Vyhledej úkol"
     echo "6/ Zobraz statistiky"
