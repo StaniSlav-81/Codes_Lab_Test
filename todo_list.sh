@@ -1,18 +1,23 @@
 #!/bin/bash
-
 #Moje první To-Do aplikace v Bashi :-)
 
 # Soubor se seznamem úkolů
-
 TODO_FILE="todo.txt"
-# Načtení funkcí z externího souboru
-source ./funkce.todo.sh
-# Funkce: označení zdrojového souboru
+
+# Funkce: inicializace souboru - ověření a vytvoření
 init_file() {
     if [ ! -f "$TODO_FILE" ]; then
         touch "$TODO_FILE"
+        echo "Soubor $TODO_FILE byl vytvořen."
     fi
 }
+
+# NEJPRVE inicializuj soubor
+init_file
+
+# Načtení funkcí z externího souboru
+source ./funkce.todo.sh
+
 # Funkce: zobrazení menu
 show_menu() {
     echo "******************************"
@@ -28,33 +33,47 @@ show_menu() {
     echo "8/ Ukonči akci"
     echo "******************************"
 }
+
 # Funkce: přidání úkolu
 add_task() {
     read -p "Zadej nový úkol: " task
     echo "[ ] $task" >> "$TODO_FILE"
     echo "Úkol přidán!"
 }
+
 # Funkce: zobrazení úkolů
 view_tasks() {
+    if [ ! -s "$TODO_FILE" ]; then
+        echo "Seznam úkolů je prázdný."
+        return
+    fi
     echo "Zobraz úkoly:"
     nl -w2 -s'. ' "$TODO_FILE"
 }
+
 # Funkce: označení úkolu jako dokončeného
 mark_task() {
     view_tasks
+    if [ ! -s "$TODO_FILE" ]; then
+        return
+    fi
     read -p "Zadej číslo úkolu k označení: " num
     sed -i "${num}s/\\[ \\]/[x]/" "$TODO_FILE"
     echo "Úkol označen jako dokončený!"
 }
+
 # Funkce: smazání úkolu
 delete_task() {
     view_tasks
+    if [ ! -s "$TODO_FILE" ]; then
+        return
+    fi
     read -p "Zadej číslo úkolu ke smazání: " num
     sed -i "${num}d" "$TODO_FILE"
     echo "Úkol vymazán!"
 }
+
 # Hlavní smyčka
-init_file
 while true; do
     show_menu
     read -p "Vyberte jednu z možností: " choice
