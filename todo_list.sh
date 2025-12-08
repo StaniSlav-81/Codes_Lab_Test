@@ -1,6 +1,9 @@
 #!/bin/bash
+
 #Moje první To-Do aplikace v Bashi :-)
+
 # Soubor se seznamem úkolů
+
 TODO_FILE="todo.txt"
 # Načtení funkcí z externího souboru
 source ./funkce.todo.sh
