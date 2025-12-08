@@ -1,45 +1,91 @@
 #!/bin/bash
+#Moje první To-Do aplikace v Bashi :-)
 
-# Funkce: která bude vyhledávat úkoly
-search_tasks() {
-    read -p "Zadej hledaný výraz: " search_term
-    echo "Nalezené úkoly:"
-    grep -n "$search_term" "$TODO_FILE" | nl -w2 -s'. '
-    
-    if [ $? -ne 0 ]; then
-        echo "Žádné úkoly nenalezeny."
+# Soubor se seznamem úkolů
+TODO_FILE="todo.txt"
+
+# Funkce: inicializace souboru - ověření a vytvoření
+init_file() {
+    if [ ! -f "$TODO_FILE" ]; then
+        touch "$TODO_FILE"
+        echo "Soubor $TODO_FILE byl vytvořen."
     fi
 }
 
-# Funkce: ukaž mi statistiky
-show_statistics() {
+# NEJPRVE inicializuj soubor
+init_file
+
+# Načtení funkcí z externího souboru
+source ./funkce.todo.sh
+
+# Funkce: zobrazení menu
+show_menu() {
+    echo "******************************"
+    echo "      To-Do aplikace"
+    echo "******************************"
+    echo "1/ Přidej úkol"
+    echo "2/ Zobraz úkoly"
+    echo "3/ Označ úkol jako hotový"
+    echo "4/ Smaž úkol"
+    echo "5/ Vyhledej úkol"
+    echo "6/ Zobraz statistiky"
+    echo "7/ Edituj úkol"
+    echo "8/ Ukonči akci"
+    echo "******************************"
+}
+
+# Funkce: přidání úkolu
+add_task() {
+    read -p "Zadej nový úkol: " task
+    echo "[ ] $task" >> "$TODO_FILE"
+    echo "Úkol přidán!"
+}
+
+# Funkce: zobrazení úkolů
+view_tasks() {
     if [ ! -s "$TODO_FILE" ]; then
         echo "Seznam úkolů je prázdný."
         return
     fi
-    
-    total=$(wc -l < "$TODO_FILE")
-    completed=$(grep -c "\\[x\\]" "$TODO_FILE")
-    pending=$((total - completed))
-    
-    echo "******************************"
-    echo "       STATISTIKY"
-    echo "******************************"
-    echo "Všechny úkoly:      $total"
-    echo "Hotové úkoly:         $completed"
-    echo "Nedokončené úkoly:       $pending"
-    echo "******************************"
+    echo "Zobraz úkoly:"
+    nl -w2 -s'. ' "$TODO_FILE"
 }
 
-# Funkce: úprava úkolu
-edit_task() {
+# Funkce: označení úkolu jako dokončeného
+mark_task() {
     view_tasks
-    read -p "Zadej číslo úkolu k editaci: " num
-    read -p "Zadej nový text úkolu: " new_task
-    
-    # Zjisti prověř aktuální stav (dokončený/nedokončený)
-    status=$(sed -n "${num}p" "$TODO_FILE" | grep -o "\\[.\\]")
-    
-    sed -i "${num}s/.*/$status $new_task/" "$TODO_FILE"
-    echo "Úkol upraven!"
+    if [ ! -s "$TODO_FILE" ]; then
+        return
+    fi
+    read -p "Zadej číslo úkolu k označení: " num
+    sed -i "${num}s/\\[ \\]/[x]/" "$TODO_FILE"
+    echo "Úkol označen jako dokončený!"
 }
+
+# Funkce: smazání úkolu
+delete_task() {
+    view_tasks
+    if [ ! -s "$TODO_FILE" ]; then
+        return
+    fi
+    read -p "Zadej číslo úkolu ke smazání: " num
+    sed -i "${num}d" "$TODO_FILE"
+    echo "Úkol vymazán!"
+}
+
+# Hlavní smyčka
+while true; do
+    show_menu
+    read -p "Vyberte jednu z možností: " choice
+    case $choice in
+        1) add_task ;;
+        2) view_tasks ;;
+        3) mark_task ;;
+        4) delete_task ;;
+        5) search_tasks ;;
+        6) show_statistics ;;
+        7) edit_task ;;
+        8) echo "Ukončuji program."; break ;;
+        *) echo "Neplatná volba, zkuste znovu." ;;
+    esac
+done
