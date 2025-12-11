@@ -58,6 +58,14 @@ mark_task() {
         return
     fi
     read -p "Zadej číslo úkolu k označení: " num
+    
+    # Ověř, že číslo je platné
+    total_lines=$(wc -l < "$TODO_FILE")
+    if [ "$num" -lt 1 ] || [ "$num" -gt "$total_lines" ]; then
+        echo "Neplatné číslo úkolu!"
+        return
+    fi
+    
     sed -i "${num}s/\\[ \\]/[x]/" "$TODO_FILE"
     echo "Úkol označen jako dokončený!"
 }
@@ -69,6 +77,14 @@ delete_task() {
         return
     fi
     read -p "Zadej číslo úkolu ke smazání: " num
+    
+    # Ověř, že číslo je platné
+    total_lines=$(wc -l < "$TODO_FILE")
+    if [ "$num" -lt 1 ] || [ "$num" -gt "$total_lines" ]; then
+        echo "Neplatné číslo úkolu!"
+        return
+    fi
+    
     sed -i "${num}d" "$TODO_FILE"
     echo "Úkol vymazán!"
 }
